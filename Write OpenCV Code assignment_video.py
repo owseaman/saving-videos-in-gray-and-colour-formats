@@ -3,6 +3,7 @@
 
 import cv2
 #import numpy
+import time
 
 # Create a VideoCapture object
 cap = cv2.VideoCapture(0)
@@ -25,7 +26,9 @@ fps = 30//2 #Frame Per Second implies 15 picture frames per second, moving fast?
 gOut = cv2.VideoWriter('gray output.avi', cv2.VideoWriter_fourcc('M','J', 'P', 'G'), fps, (frame_width, frame_height), 0)
 cOut = cv2.VideoWriter('color output.avi', cv2.VideoWriter_fourcc('M','J', 'P', 'G'), fps, (frame_width, frame_height))
 
+startTime = time.time()
 while cap.isOpened(): #OR while (True):
+
     ret, frame = cap.read()
     if ret == True:
         #Convert colored frame to gray before writing(or saving)
@@ -47,6 +50,10 @@ while cap.isOpened(): #OR while (True):
         if cv2.waitKey(framesDelay) & 0xFF == ord('q'):
         #With respect to set operations, the & operator is equivalent to the intersection() operation, and creates a new set with elements common to s and t:
 
+            break
+        endTime = time.time()
+        elapsed = endTime - startTime
+        if elapsed >= 10: #seconds time.time() output seconds
             break
 
     # Break the loop
